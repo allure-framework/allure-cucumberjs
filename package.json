@@ -1,0 +1,18 @@
+{
+  "name": "cucumberjs-allure-reporter",
+  "version": "0.0.1",
+  "description": "Allure Framework reporter for Cucumber JS",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:allure-framework/cucumberjs-allure-reporter.git"
+  },
+  "dependencies": {
+    "allure-js-commons": "1.0.2"
+  },
+  "devDependencies": {
+    "cucumber": "0.5.2",
+    "protractor": "2.1.0",
+    "protractor-cucumber": "0.1.5"
+  }
+}

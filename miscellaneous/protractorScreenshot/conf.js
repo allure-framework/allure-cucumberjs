@@ -1,8 +1,15 @@
 exports.config = {
     specs : ['protractorScreenshot.feature'],
+
     capabilities : {
         browserName : 'chrome'
     },
-    framework : 'cucumber',
-    directConnection : true
+    framework : 'custom',
+    frameworkPath: require.resolve('protractor-cucumber-framework'),
+    directConnection : true,
+
+    cucumberOpts: {
+        require: '**/**.js'
+    }
+
 }

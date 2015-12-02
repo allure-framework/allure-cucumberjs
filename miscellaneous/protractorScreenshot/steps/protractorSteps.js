@@ -3,7 +3,7 @@ module.exports = function(){
         browser.get('https://angularjs.org/');
     });
 
-    this.Then('failed step', function(callback){
-        callback.fail(new Error('failed'));
+    this.Then('failed step', function(){
+        throw new Error('failed');
     });
 }

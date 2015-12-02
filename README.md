@@ -65,7 +65,7 @@ or run everything with:
    ```./node_modules/.bin/cucumber.js features/```   
    
 
-To check protractor screenshot test install `protractor` and `protractor-cucumber` and then run tests:
+To check protractor screenshot test install `protractor` and `protractor-cucumber-framework` and then run tests:
 ```./node_modules/protractor/bin/protractor miscellaneous/protractorScreenshot/conf.js```
 
 To check basic logging run:
@@ -76,3 +76,10 @@ To check basic configuration run:
 
 To check custom tags run:
 ```./node_modules/.bin/cucumber.js miscellaneous/customTagNames```
+
+## Release notes
+02/12/2015 version 1.0.0
+* plugin updated to work with cucumber 0.9.1
+
+01/09/2015 version 0.0.1
+* first release

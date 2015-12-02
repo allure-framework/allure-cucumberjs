@@ -108,16 +108,19 @@ function Reporter(){
 }
 
 function getStepResult(stepResult){
-    if (stepResult.isSuccessful()){
-        return 'passed';
-    } else if (stepResult.isFailed()){
-        return 'failed';
-    } else if (stepResult.isSkipped() || stepResult.isPending()) {
-        return 'pending';
-    } else if(stepResult.isUndefined()){
-        return 'broken';
-    } else {
-        return 'unknown';
+
+    switch (stepResult.getStatus()){
+        case 'passed' :
+            return 'passed';
+        case 'failed' :
+            return 'failed';
+        case 'skipped':
+        case 'pending' :
+            return 'pending';
+        case 'undefined':
+            return 'broken';
+        default:
+            return 'unknown';
     }
 }
 
@@ -159,24 +162,26 @@ function getLabels(object){
 }
 
 function getScenarioFailure(stepResult){
-    if (stepResult.isSuccessful()){
-        return null;
-    } else if (stepResult.isFailed()){
-        return stepResult.getFailureException();
-    } else if (stepResult.isUndefined()){
-        return {message: 'Step not defined', 'stack-trace' : ''};
-    } else if(stepResult.isPending()) {
-        return {message: 'Step not implemented', 'stack-trace' : ''};
-    } else if (stepResult.isSkipped() ){
-        return {message : 'Step not executed', 'stack-trace' : ''};
-    } else {
-        return {message : 'Unknown problem', 'stack-trace' : ''};
+
+    switch (stepResult.getStatus()){
+        case 'passed' :
+            return null;
+        case 'failed' :
+            return stepResult.getFailureException();
+        case 'undefined':
+            return {message: 'Step not defined', 'stack-trace' : ''};
+        case 'pending':
+            return {message: 'Step not implemented', 'stack-trace' : ''};
+        case 'skipped':
+            return {message : 'Step not executed', 'stack-trace' : ''};
+        default:
+            return {message : 'Unknown problem', 'stack-trace' : ''};
     }
 }
 
 Reporter.config = function(params){
     configuration = params;
-}
+};
 
 module.exports = Reporter;
 module.exports.allureReporter = allure;

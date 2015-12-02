@@ -8,7 +8,7 @@ module.exports = function(){
     });
 
     this.Then('failed step', function(callback){
-        callback.fail(new Error('failed'));
+        throw new Error('Step failed on purpose');
     });
 
     this.Then('passed step', function(callback){
@@ -41,7 +41,8 @@ module.exports = function(){
     });
 
     this.Then('result should be equal $result', function(result, callback){
-        result == sum ? callback() : callback.fail(new Error('wrong number: ' + sum + " is not equal to expected: " + result));
+        if (result != sum) throw new Error('wrong number: ' + sum + " is not equal to expected: " + result);
+        callback();
     });
 
     this.Given('dataTable:',function(table, callback){

@@ -8,11 +8,11 @@
     "url": "git@github.com:allure-framework/cucumberjs-allure-reporter.git"
   },
   "dependencies": {
-    "allure-js-commons": "1.0.2"
+    "allure-js-commons": "1.2.0"
   },
   "devDependencies": {
-    "cucumber": "0.9.1",
-    "protractor": "3.0.0",
-    "protractor-cucumber-framework" : "0.3.0"
+    "cucumber": "1.2.0",
+    "protractor": "3.3.0",
+    "protractor-cucumber-framework" : "0.6.0"
   }
 }

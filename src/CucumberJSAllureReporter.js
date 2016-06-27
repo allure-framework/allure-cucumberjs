@@ -57,7 +57,7 @@ function Reporter(){
     this.registerHandler('AfterStep', function (event, callback) {
         var step = event.getPayloadItem('step');
 
-        if (step.hasDataTable()){
+        if (step && step.hasDataTable == 'function' && step.hasDataTable()){
             var rawTable = step.getAttachment().raw();
             var cellLength = [];
             var result = '';
@@ -86,7 +86,7 @@ function Reporter(){
             allure.addAttachment('Step: \"' + step.getName() + '\" dataTable', result, 'text/plain');
         }
 
-        if (step.hasDocString()){
+        if (step && step.hasDocString == 'function' && step.hasDocString()){
             allure.addAttachment('Step: \"' + step.getName() + '\" docString', step.getAttachment().getContents(), 'text/plain');
         }
 

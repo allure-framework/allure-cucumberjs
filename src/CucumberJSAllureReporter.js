@@ -11,26 +11,24 @@ function Reporter(){
     var failedResult = null;
     var isScenarioFailed = false;
 
-    this.registerHandler('BeforeFeature', function(event, callback){
-        var feature = event.getPayloadItem('feature');
+    this.registerHandler('BeforeFeature', function(feature, callback){
         allure.startSuite(feature.getName());
         callback();
     });
 
-    this.registerHandler('AfterFeature', function(event, callback){
+    this.registerHandler('AfterFeature', function(feature, callback){
         allure.endSuite();
         callback();
     });
 
-    this.registerHandler('BeforeScenario', function (event, callback) {
+    this.registerHandler('BeforeScenario', function (scenario, callback) {
         failedResult = null;
         isScenarioFailed = false;
 
-        var scenario = event.getPayloadItem('scenario');
         allure.startCase(scenario.getName());
 
         var currentTest = allure.getCurrentSuite().currentTest;
-        currentTest.setDesctiption(scenario.getDescription());
+        currentTest.setDescription(scenario.getDescription());
 
         getLabels(scenario).forEach(function (label) {
             currentTest.addLabel(label.name, label.value);
@@ -39,55 +37,58 @@ function Reporter(){
         callback();
     });
 
-    this.registerHandler('AfterScenario', function (event, callback) {
-        var scenario = event.getPayloadItem('scenario');
+    this.registerHandler('AfterScenario', function (scenario, callback) {
         allure.endCase(isScenarioFailed ? "failed" : getStepResult(lastResults),
                        isScenarioFailed ? getScenarioFailure(failedResult) : getScenarioFailure(lastResults));
         callback();
     });
 
-    this.registerHandler('BeforeStep', function (event, callback) {
+    this.registerHandler('BeforeStep', function (step, callback) {
         lastResults = null;
 
-        var step = event.getPayloadItem('step');
         allure.startStep(step.getName());
         callback();
     });
 
-    this.registerHandler('AfterStep', function (event, callback) {
-        var step = event.getPayloadItem('step');
+    this.registerHandler('AfterStep', function (step, callback) {
+        var arguments = step.getArguments();
 
-        if (step.hasDataTable()){
-            var rawTable = step.getAttachment().raw();
-            var cellLength = [];
-            var result = '';
+        if (arguments.length > 0){
+            for (var argument of arguments){
+                if (argument.getType() == 'DataTable'){
+                    var rawTable = argument.raw();
+                    var cellLength = [];
+                    var result = '';
 
-            for (var column = 0; column < rawTable[0].length; column++){
-                cellLength[column] = 0;
-                for (var row = 0; row < rawTable.length; row++){
-                    if (cellLength[column] < rawTable[row][column].length) {
-                        cellLength[column] = rawTable[row][column].length;
+                    for (var column = 0; column < rawTable[0].length; column++){
+                        cellLength[column] = 0;
+                        for (var row = 0; row < rawTable.length; row++){
+                            if (cellLength[column] < rawTable[row][column].length) {
+                                cellLength[column] = rawTable[row][column].length;
+                            }
+                        }
                     }
+
+                    for (var row =0; row < rawTable.length; row++){
+                        result += "| ";
+                        for (var column = 0; column < rawTable[row].length; column++){
+                            result += rawTable[row][column];
+                            for (var i =0; i < (cellLength[column] - rawTable[row][column].length); i++){
+                                result += ' ';
+                            }
+                            result += " |";
+                        }
+                        result += "\n";
+                    }
+
+                    allure.addAttachment('Step: \"' + step.getName() + '\" dataTable', result, 'text/plain');
+                }
+
+                if (argument.getType() == 'DocString'){
+                    allure.addAttachment('Step: \"' + step.getName() + '\" docString', argument.getContent(), 'text/plain');
                 }
             }
 
-            for (var row =0; row < rawTable.length; row++){
-                result += "| ";
-                for (var column = 0; column < rawTable[row].length; column++){
-                    result += rawTable[row][column];
-                    for (var i =0; i < (cellLength[column] - rawTable[row][column].length); i++){
-                        result += ' ';
-                    }
-                    result += " |";
-                }
-                result += "\n";
-            }
-
-            allure.addAttachment('Step: \"' + step.getName() + '\" dataTable', result, 'text/plain');
-        }
-
-        if (step.hasDocString()){
-            allure.addAttachment('Step: \"' + step.getName() + '\" docString', step.getAttachment().getContents(), 'text/plain');
         }
 
         var stepResult = getStepResult(lastResults);
@@ -101,8 +102,8 @@ function Reporter(){
         callback();
     });
 
-    this.registerHandler('StepResult', function (event, callback) {
-        lastResults = event.getPayloadItem('stepResult');
+    this.registerHandler('StepResult', function (stepResult, callback) {
+        lastResults = stepResult;
         callback();
     });
 }

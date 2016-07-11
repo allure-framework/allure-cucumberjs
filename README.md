@@ -78,6 +78,10 @@ To check custom tags run:
 ```./node_modules/.bin/cucumber.js miscellaneous/customTagNames```
 
 ## Release notes
+
+11/07/2016 version 1.0.2
+* Peer dependency for cucumber (>= 1.2.0) added
+
 06/07/2016 version 1.0.1
 * dependencies updated for allure-js-commons, protractor, cucumber and protractor-cucumber-framework
 * fixed cucumber handlers - getPayload will not be available in upcoming cucumber major release

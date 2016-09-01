@@ -34,7 +34,7 @@ Possible labels:
 * host
 * thread    
 
-If you want to cancel step or tests, simply throw new Error with message 'Step cancelled' or 'Test cancelled'.
+If you want to cancel step or test, simply throw new Error with message 'Step cancelled' or 'Test cancelled'.
     
 ## Generate HTML report from Allure results
 

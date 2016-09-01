@@ -1,6 +1,6 @@
 {
   "name": "cucumberjs-allure-reporter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Allure Framework reporter for Cucumber JS",
   "license": "ISC",
   "repository": {

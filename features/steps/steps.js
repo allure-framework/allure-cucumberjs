@@ -20,7 +20,11 @@ module.exports = function(){
     });
 
     this.Then('pending step', function(callback){
-        callback.pending();
+        callback(null,'pending');
+    });
+
+    this.Then('cancelled step', function(callback){
+        throw new Error('Step cancelled');
     });
 
     this.Then('exception is thrown', function(){

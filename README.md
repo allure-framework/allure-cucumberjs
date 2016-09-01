@@ -33,6 +33,8 @@ Possible labels:
 * testId
 * host
 * thread    
+
+If you want to cancel step or test, simply throw new Error with message 'Step cancelled' or 'Test cancelled'.
     
 ## Generate HTML report from Allure results
 
@@ -79,8 +81,11 @@ To check custom tags run:
 
 ## Release notes
 
+01/09/2016 version 1.0.3
+* added possibility to cancel steps and tests
+
 11/07/2016 version 1.0.2
-* Peer dependency for cucumber (>= 1.2.0) added
+* peer dependency for cucumber (>= 1.2.0) added
 
 06/07/2016 version 1.0.1
 * dependencies updated for allure-js-commons, protractor, cucumber and protractor-cucumber-framework

@@ -114,14 +114,20 @@ function getStepResult(stepResult){
         case 'passed' :
             return 'passed';
         case 'failed' :
-            return 'failed';
+            var error = stepResult.getFailureException();
+            if (error && (error.message === 'Step cancelled' || error.message === 'Test cancelled')){
+                return 'skipped';
+            } else {
+                return 'failed';
+            }
         case 'skipped':
+            return 'skipped';
         case 'pending' :
             return 'pending';
         case 'undefined':
             return 'broken';
         default:
-            return 'unknown';
+            return 'broken';
     }
 }
 

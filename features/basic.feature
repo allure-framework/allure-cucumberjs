@@ -21,6 +21,11 @@ Feature: Basic tests
     When when step
     Then failed step
 
+  Scenario: Cancelled test
+    Given given step
+    When when step
+    Then cancelled step
+
   Scenario: Failed test with skipped
     Given given step
     When when step

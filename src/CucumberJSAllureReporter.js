@@ -46,7 +46,12 @@ function Reporter(){
     this.registerHandler('BeforeStep', function (step, callback) {
         lastResults = null;
 
-        allure.startStep(step.getName());
+        if (!step.isHidden()) {
+            allure.startStep(step.getName());
+        }else {
+            allure.startStep(step.getKeyword());
+        }
+
         callback();
     });
 

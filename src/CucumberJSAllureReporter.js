@@ -46,6 +46,8 @@ function Reporter(){
     this.registerHandler('BeforeStep', function (step, callback) {
         lastResults = null;
 
+        console.log(step);
+
         if (!step.isHidden()) {
             allure.startStep(step.getName());
         }else {
@@ -191,9 +193,17 @@ function getScenarioFailure(stepResult){
     }
 }
 
+function displayFiledSession(message) {
+    allure.startSuite('Failed session');
+    allure.startCase(message);
+    allure.endCase('failed');
+    allure.endSuite();
+}
+
 Reporter.config = function(params){
     configuration = params;
 };
 
 module.exports = Reporter;
 module.exports.allureReporter = allure;
+module.exports.displayFailedSession = displayFiledSession;

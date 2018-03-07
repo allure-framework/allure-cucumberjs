@@ -127,7 +127,7 @@ function getStepResult(stepResult){
             }
         case 'skipped':
             return 'skipped';
-        case 'pending'
+        case 'pending':
             return 'pending';
         case 'undefined':
             return 'broken';

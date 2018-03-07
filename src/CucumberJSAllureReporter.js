@@ -46,8 +46,6 @@ function Reporter(){
     this.registerHandler('BeforeStep', function (step, callback) {
         lastResults = null;
 
-        console.log(step);
-
         if (!step.isHidden()) {
             allure.startStep(step.getName());
         }else {
@@ -129,7 +127,7 @@ function getStepResult(stepResult){
             }
         case 'skipped':
             return 'skipped';
-        case 'pending' :
+        case 'pending'
             return 'pending';
         case 'undefined':
             return 'broken';

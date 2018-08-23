@@ -25,7 +25,7 @@ function Reporter(){
         failedResult = null;
         isScenarioFailed = false;
 
-        allure.startCase(scenario.getName() + ' : ' + new Date().now());
+        allure.startCase(scenario.getName() + ' : ' + Date.now());
 
         var currentTest = allure.getCurrentSuite().currentTest;
         currentTest.setDescription(scenario.getDescription());

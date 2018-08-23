@@ -1,8 +1,2 @@
-*.iml
-npm-debug.log
-.idea/
-node_modules/
-reports/
-allure-results/
-allure-report/
-target/
+.project 
+bin/

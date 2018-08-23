@@ -25,7 +25,7 @@ function Reporter(){
         failedResult = null;
         isScenarioFailed = false;
 
-        allure.startCase(scenario.getName());
+        allure.startCase(scenario.getName() + ' : ' + Date.now());
 
         var currentTest = allure.getCurrentSuite().currentTest;
         currentTest.setDescription(scenario.getDescription());
@@ -46,7 +46,12 @@ function Reporter(){
     this.registerHandler('BeforeStep', function (step, callback) {
         lastResults = null;
 
-        allure.startStep(step.getName());
+        if (!step.isHidden()) {
+            allure.startStep(step.getName());
+        }else {
+            allure.startStep(step.getKeyword());
+        }
+
         callback();
     });
 
@@ -122,7 +127,7 @@ function getStepResult(stepResult){
             }
         case 'skipped':
             return 'skipped';
-        case 'pending' :
+        case 'pending':
             return 'pending';
         case 'undefined':
             return 'broken';
@@ -186,9 +191,17 @@ function getScenarioFailure(stepResult){
     }
 }
 
+function displayFiledSession(message) {
+    allure.startSuite('Failed session');
+    allure.startCase(message);
+    allure.endCase('failed');
+    allure.endSuite();
+}
+
 Reporter.config = function(params){
     configuration = params;
 };
 
 module.exports = Reporter;
 module.exports.allureReporter = allure;
+module.exports.displayFailedSession = displayFiledSession;

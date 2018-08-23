@@ -12,7 +12,7 @@ function Reporter(){
     var isScenarioFailed = false;
 
     this.registerHandler('BeforeFeature', function(feature, callback){
-        allure.startSuite(feature.getName());
+        allure.startSuite(feature.getName() + new Date().getMilliseconds());
         callback();
     });
 
@@ -25,7 +25,7 @@ function Reporter(){
         failedResult = null;
         isScenarioFailed = false;
 
-        allure.startCase(scenario.getName() + ' : ' + new Date().getMilliseconds());
+        allure.startCase(scenario.getName());
 
         var currentTest = allure.getCurrentSuite().currentTest;
         currentTest.setDescription(scenario.getDescription());

@@ -12,7 +12,7 @@ function Reporter(){
     var isScenarioFailed = false;
 
     this.registerHandler('BeforeFeature', function(feature, callback){
-        allure.startSuite(feature.getName());
+        allure.startSuite(feature.getName() + new Date().getMilliseconds);
         callback();
     });
 

@@ -1,4 +1,7 @@
-# Allure report version supported : 1.4.15
+# [DEPRECATED]
+## Please follow https://github.com/allure-framework/allure-js
+Allure CucumberJS
+====================
 
 ## HOW TO USE IT?
 
